@@ -1,11 +1,11 @@
-# Rancher and RKE on vSphere Terraform Script
+# Terraform script for RKE2 Infrastructure and Rancher on vSphere
 
 ![Architecture Diagram](./Images/Architecture.png)
 
 This repo creates the following:
 
-* 1x NGINX Loadbalancer
-* 3x RKE Nodes leveraging Embedded HA, forming a K8s Cluster
+* 1x HAproxy Loadbalancer
+* 3x RKE2 Nodes leveraging Embedded HA, forming a K8s Cluster
 * Installation of `Cert-Manager` and `Rancher` 
 
 # Prerequisites
@@ -18,14 +18,11 @@ This repo creates the following:
 curl -sSL https://raw.githubusercontent.com/vmware/cloud-init-vmware-guestinfo/master/install.sh | sh -
 ```
 
-Or use the following Packer Template:
-
-https://github.com/David-VTUK/Rancher-Packer/tree/master/vSphere/ubuntu_2004_cloud_init_guestinfo
-
 # Instructions
 
-* Copy `variables.tfvars.example` as `variables.tfvars`
+* Copy `terraform.tfvars.example` as `terraform.tfvars`
 * Populate as you see fit
+* Initialize the providers with  `terraform init`
 * Apply with `terraform apply --var-file variables.tfvars`
 * Once comple, Terraform will output the URL for Rancher, IE:
 
@@ -34,5 +31,5 @@ Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-rancher_url = https://rancher.virtualthoughts.co.uk
+rancher_url = https://rancher.lab.k8
 ```
