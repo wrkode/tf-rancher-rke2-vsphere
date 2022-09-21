@@ -200,3 +200,9 @@ variable "rancher_chart_options" {
   description = "List of options for the Rancher Helm Chart"
   default = []
 }
+
+variable "bootstrapPassword" {
+  type        = string
+  description = "Rancher Bootstrap Password"
+  
+}

@@ -29,6 +29,10 @@ resource "helm_release" "rancher_server" {
     name  = "hostname"
     value = var.rancher_hostname
   }
+  set {
+    name = "bootstrapPassword"
+    value = var.bootstrapPassword
+  }
 
   set {
     name = "ingress.tls.source"

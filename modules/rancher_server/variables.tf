@@ -81,3 +81,9 @@ variable "rancher_k8s" {
   })
   description = "K8s cluster client configuration"
 }
+
+variable "bootstrapPassword" {
+  type        = string
+  description = "Rancher Bootstrap Password"
+  
+}

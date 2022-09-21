@@ -67,6 +67,7 @@ module "rancher_server" {
   }
   rancher_hostname    = var.rancher_hostname
   rancher_version     = var.rancher_version
+  bootstrapPassword   = var.bootstrapPassword
 
 
   depends_on = [module.nodes]

@@ -1,0 +1,38 @@
+vsphere_server     = "vcenter.lab.k8"               # vcenter server 
+vsphere_user       = "administrator@vsphere.local"  # vcenter username
+vsphere_password   = "VMware1!"                     # vcenter password
+vsphere_datacenter = "myDC"                         # VSphere Datacenter
+vsphere_cluster    = "cluster01"                    # VSphere Cluster
+vsphere_network    = "VM Network"                   # Vspere Network
+vm_prefix       = "rancher-"                        # Virtual Machine Name Prefix
+vm_count        = "3"                               # Number of virtual Machine to create
+vm_datastore    = "datastore1"                      # Datastore for the RKE2 VMs
+vm_cpucount     = "4"                               # Number of CPUs per VM
+vm_memory       = "4096"                            # Memory in MB per VM
+vm_domainname   = "lab.k8"                          # Domain Name
+vm_network      = "192.168.56."                     # Subnet root 
+vm_netmask      = "24"                              # Subnet mask
+vm_gateway      = "192.168.56.2"                    # Default Gateway
+vm_dns          = "192.168.56.4"                    # DNS for this Network
+vm_template     = "FBGoldenImage"                   # VSphere VM Template
+vm_ssh_user     = "linuxuser"                       # OS user (will be created at runtime with vm_ssh_key)
+vm_ssh_key      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtD9ivjqMR1/l/ZFvlLp+ZLGrFeVP2kpByGi6tbkPH0bw6Yyx7JphpHcID56BClXAkbp+ne0HboUX1NhyCYUbq3IuQPpfh9Ct7X70ih4s3K4jjwt05hyNpikBsGKVf328K+zyu5aFKRMmHid6Z00N7vaXJnYF+wzFiPxj2nxdG8afuExbC7DpJmcKeVQEp3op8IqrohuU5jz5rjpzCoX9XfFmhE6QXF/b9QyHvqMDwZD2tVvWCPCyKZYpGJ4DJqzB8rU2lwNiWAkSS4pjwUqE1vqdMZNLTUoB0FmNZSrfybfMZRIqiMiKTaGkL/RpJnLKEf3eq9FE14pE6mXVKZQrLcyJDUvB0TjMP0tM+F7XsXey+VEK0mYp9551WHhyidMvd8hUyNS14fLC1hzm+eHCI/JI1ZSost/p8nNPs0n3RRaH6SLjiooIXUh9xqx5fAVpoe7SvI4qYejaGm+N;lkzsdjfghzsdgfoihfdsg;ozisdjfhg="
+vm_disk_size    = 50                                # VM Disk size
+ip_range        = 221                               # starting IP address for the RKE2 VMs
+
+lb_address    = "192.168.56.220"                    # HAproxy VM IP Address
+lb_prefix     = "rancherui"                         # Hostname for Loadbalancer VM
+lb_datastore  = "datastore2"                        # Datastore for HAproxy VM
+lb_cpucount   = "1"                                 # CPU count for HAproxy VM
+lb_memory     = "1024"                              # Memory for HAproxy VM
+lb_domainname = "lab.k8"                            # Domain name HAproxy VM
+lb_netmask    = "24"                                # Subnet mask HAproxy VM
+lb_gateway    = "192.168.56.2"                      # Default Gateway HAproxy VM
+lb_dns        = "192.168.56.4"                      # DNS for this network
+
+rancher_hostname    = "rancherui.lab.k8"            # Rancher hostname = HAproxy VM Hostname
+rancher_version     = "2.6.6"                       # Rancher Version to be installed
+bootstrapPassword   = "Welcome@R4ncher1"            # Rancher Bootstrap Password
+
+host_username      = "root"                         # VMs Root user 
+host_password      = "P@ssword!4325=23867"                         # VMs Root password
