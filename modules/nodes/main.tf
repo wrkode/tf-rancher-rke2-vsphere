@@ -69,6 +69,7 @@ resource "vsphere_virtual_machine" "rke-nodes" {
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/templates/userdata.yml.tpl", {
       node_ip       = "${var.vm_network}${count.index + var.ip_range}",
       node_hostname = "${var.vm_prefix}${count.index + 1}.${var.vm_domainname}",
+      rancherui     = "${var.rancher_hostname}",
       vm_ssh_user = var.vm_ssh_user,
       vm_ssh_key = var.vm_ssh_key
     }))

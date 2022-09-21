@@ -7,7 +7,7 @@ users:
 write_files:
   - path: /root/config.yaml
     content: |
-        server: https://lbfb.lab.k8:9345
+        server: https://${rancherui}:9345
         write-kubeconfig-mode: 0644
         tls-san:
         - lbfb.lab.k8
