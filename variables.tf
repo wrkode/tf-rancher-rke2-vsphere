@@ -211,3 +211,9 @@ variable "bootstrapPassword" {
   description = "Rancher Bootstrap Password"
   
 }
+
+variable "admin_password" {
+  type = string
+  description = "Rancher Admin User Password"
+  
+}
