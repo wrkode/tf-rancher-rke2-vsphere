@@ -56,20 +56,3 @@ resource "helm_release" "rancher_server" {
     helm_release.cert_manager
   ]
 }
-
-/*
-resource "null_resource" "cert-manager-prereqs" {
-
-  provisioner "local-exec" {
-    command = "kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.15.0/cert-manager.crds.yaml --kubeconfig=kube_config_cluster.yml"
-  }
-
-    provisioner "local-exec" {
-    command = "kubectl create ns cattle-system --kubeconfig=kube_config_cluster.yml"
-  }
-
-    provisioner "local-exec" {
-    command = "kubectl create ns cert-manager --kubeconfig=kube_config_cluster.yml"
-  }
-}
-*/

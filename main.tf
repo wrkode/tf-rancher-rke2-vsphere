@@ -1,9 +1,3 @@
-/*
-locals {
-    kube_config = yamldecode(module.nodes.kubeconfig)
-    //kube_config = yamldecode(file("rke2.yaml"))
-}
-*/
 module "nodes" {
   source             = "./modules/nodes"
   vsphere_server     = var.vsphere_server
@@ -43,6 +37,7 @@ module "nodes" {
   vm_ssh_user     = var.vm_ssh_user
 
   rancher_hostname = var.rancher_hostname
+  rke2_token       = var.rke2_token 
   host_username = var.host_username
   host_password = var.host_password
 }
@@ -61,8 +56,6 @@ module "rancher_server" {
     version = var.rancher_version
     branch = "latest"
     chart_set = var.rancher_chart_options
-  
-  //certmanager_version = var.certmanager_version
 
   }
   rancher_hostname    = var.rancher_hostname
@@ -82,16 +75,5 @@ resource "null_resource" "wait_for_rancher" {
   }
 
   depends_on = [module.rancher]
-}
-
-
-provider "helm" {
-  kubernetes {
-    config_path = "./kube_config_cluster.yml"
-  }
-}
-
-provider "kubernetes" {
-  config_path = "./kube_config_cluster.yml"
 }
 */

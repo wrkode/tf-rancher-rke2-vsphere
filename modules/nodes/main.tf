@@ -70,6 +70,7 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       node_ip       = "${var.vm_network}${count.index + var.ip_range}",
       node_hostname = "${var.vm_prefix}${count.index + 1}.${var.vm_domainname}",
       rancherui     = "${var.rancher_hostname}",
+      rke2_token    = "${var.rke2_token}"
       vm_ssh_user = var.vm_ssh_user,
       vm_ssh_key = var.vm_ssh_key
     }))
@@ -94,7 +95,7 @@ resource "null_resource" "rke2_primary" {
       "sed -i 1d /etc/rancher/rke2/config.yaml",
       "systemctl enable rke2-server",
       "systemctl start rke2-server",
-      "sleep 20" # Giving time to K8s node to get in Ready state
+      "sleep 20" # Giving time to bootstrap K8s
     ]
     
   }
@@ -204,20 +205,5 @@ resource "vsphere_virtual_machine" "rke-lb" {
     }))
     "guestinfo.userdata.encoding" = "base64"
 
-
-
   }
 }
-/*
-resource "null_resource" "remote_kubeconfig" {
-  depends_on = [
-    null_resource.wait_for_rke2_ready
-  ]
-
-  provisioner "local-exec" {
-    command = "sshpass -p ${var.host_password} scp -o StrictHostKeyChecking=no ${var.host_username}@${vsphere_virtual_machine.rke-nodes.*.default_ip_address[0]}:/etc/rancher/rke2/rke2.yaml rke2.yaml && sed -i 's/127\\.0\\.0\\.1/${var.rancher_hostname}/' rke2.yaml"
-  
-  }
-
-}
-*/

@@ -10,8 +10,8 @@ write_files:
         server: https://${rancherui}:9345
         write-kubeconfig-mode: 0644
         tls-san:
-        - lbfb.lab.k8
-        token: supersecretjujitsu
+        - ${rancherui}
+        token: ${rke2_token}
         secrets-encryption: true
         profile: cis-1.6           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
         cni: calico

@@ -160,6 +160,11 @@ variable rancher_hostname {
   description = "Name for the Rancher host"
 }
 
+variable rke2_token {
+  type = string
+  description = "RKE2 registration token"
+  
+}
 variable vm_ssh_key {
   type        = string
   description = "SSH key to add to the cloud-init for user access"

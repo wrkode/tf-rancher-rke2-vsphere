@@ -148,6 +148,12 @@ variable rancher_hostname {
   description = "Name for the Rancher host"
 }
 
+variable rke2_token {
+  type = string
+  description = "RKE2 registration token"
+  
+}
+
 variable host_username {
   type        = string
   description = "root user" 

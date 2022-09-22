@@ -1,11 +1,7 @@
 output "instance_ip_addr" {
   value = vsphere_virtual_machine.rke-nodes.*.default_ip_address
 }
-/*
-output "kubeconfig" {
-  value = data.external.kubeconfig.result.document
-}
-*/
+
 output "lbfbtemplate" {
   value = templatefile("${path.module}/templates/userdata_lb.yml.tpl", {
         servers = {
