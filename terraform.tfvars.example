@@ -33,6 +33,7 @@ lb_dns        = "192.168.56.4"                      # DNS for this network
 rancher_hostname    = "rancherui.lab.k8"            # Rancher hostname = HAproxy VM Hostname
 rancher_version     = "2.6.6"                       # Rancher Version to be installed
 bootstrapPassword   = "Welcome@R4ncher1"            # Rancher Bootstrap Password
+rke2_token          = "supersecretjujitsu"
 
 host_username      = "root"                         # VMs Root user 
 host_password      = "P@ssword!4325=23867"                         # VMs Root password
