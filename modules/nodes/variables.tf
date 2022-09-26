@@ -13,6 +13,11 @@ variable vsphere_password {
   description = "Password for the vCenter instance"
 }
 
+variable "vm_folder" {
+  type        = string
+  description = "DC Folder for Virtual Machines"
+}
+
 variable vsphere_datacenter {
   type        = string
   description = "Name of the vCenter Datacenter object"
@@ -151,6 +156,12 @@ variable rancher_hostname {
 variable rke2_token {
   type = string
   description = "RKE2 registration token"
+  
+}
+
+variable "kubernetes_version" {
+  type = string
+  description = "RKE2 K8s version to be installed"
   
 }
 

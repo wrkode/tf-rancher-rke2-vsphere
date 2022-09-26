@@ -28,6 +28,11 @@ variable vsphere_network {
   description = "Name of the vDS/vSS Port Group to attach to the VM's"
 }
 
+variable "vm_folder" {
+  type        = string
+  description = "DC Folder for Virtual Machines"
+}
+
 variable vm_prefix {
   type        = string
   description = "Name prefix for VM's. A numerical value will be appended"
@@ -195,6 +200,12 @@ variable "rancher_version" {
   type = string
   description = "Version of Rancher Server to install"
   default = "v2.6.6"
+}
+
+variable "kubernetes_version" {
+  type = string
+  description = "RKE2 K8s version to be installed"
+  
 }
 
 variable "rancher_chart_options" {

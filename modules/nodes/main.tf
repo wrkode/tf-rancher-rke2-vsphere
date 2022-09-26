@@ -35,6 +35,7 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   name             = "${var.vm_prefix}${count.index + 1}"
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
+  folder           = var.vm_folder
 
   num_cpus = var.vm_cpucount
   memory   = var.vm_memory
@@ -70,7 +71,8 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       node_ip       = "${var.vm_network}${count.index + var.ip_range}",
       node_hostname = "${var.vm_prefix}${count.index + 1}.${var.vm_domainname}",
       rancherui     = "${var.rancher_hostname}",
-      rke2_token    = "${var.rke2_token}"
+      rke2_token    = "${var.rke2_token}",
+      k8s_version   = "${var.kubernetes_version}",
       vm_ssh_user = var.vm_ssh_user,
       vm_ssh_key = var.vm_ssh_key
     }))
@@ -164,6 +166,7 @@ resource "vsphere_virtual_machine" "rke-lb" {
   name             = var.lb_prefix
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
+  folder           = var.vm_folder
 
   num_cpus = var.lb_cpucount
   memory   = var.lb_memory

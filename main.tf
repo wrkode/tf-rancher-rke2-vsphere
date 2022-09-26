@@ -6,7 +6,8 @@ module "nodes" {
   vsphere_datacenter = var.vsphere_datacenter
   vsphere_cluster    = var.vsphere_cluster
   vsphere_network    = var.vsphere_network
-
+  
+  vm_folder     = var.vm_folder
   vm_prefix     = var.vm_prefix
   vm_count      = var.vm_count
   vm_datastore  = var.vm_datastore
@@ -36,10 +37,11 @@ module "nodes" {
   vm_ssh_key      = var.vm_ssh_key
   vm_ssh_user     = var.vm_ssh_user
 
-  rancher_hostname = var.rancher_hostname
-  rke2_token       = var.rke2_token 
-  host_username = var.host_username
-  host_password = var.host_password
+  rancher_hostname   = var.rancher_hostname
+  rke2_token         = var.rke2_token
+  kubernetes_version = var.kubernetes_version 
+  host_username      = var.host_username
+  host_password      = var.host_password
 }
 
 
