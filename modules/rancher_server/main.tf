@@ -56,3 +56,18 @@ resource "helm_release" "rancher_server" {
     helm_release.cert_manager
   ]
 }
+
+resource "rancher2_bootstrap" "admin" {
+    provider         = rancher2.bootstrap
+    initial_password = "${var.bootstrapPassword}"
+    password         = "${var.admin_password}"
+    telemetry        = true 
+
+    depends_on = [
+      helm_release.rancher_server
+    ]
+}
+
+output "admin_token" {
+  value = rancher2_bootstrap.admin.token
+}

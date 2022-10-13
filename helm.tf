@@ -11,3 +11,4 @@ provider "helm" {
         client_key = base64decode(local.kube_config.users[0].user.client-key-data)
     }
 }
+

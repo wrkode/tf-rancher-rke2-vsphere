@@ -47,6 +47,9 @@ module "nodes" {
 
 module "rancher_server" {
   source              = "./modules/rancher_server"
+   providers = {
+    rancher2.bootstrap = rancher2.bootstrap
+    }
   rancher_k8s = {
     host                    = local.kube_config.clusters[0].cluster.server
     cluster_ca_certificate = base64decode(local.kube_config.clusters[0].cluster.certificate-authority-data)
@@ -63,19 +66,40 @@ module "rancher_server" {
   rancher_hostname    = var.rancher_hostname
   rancher_version     = var.rancher_version
   bootstrapPassword   = var.bootstrapPassword
-
+  admin_password      = var.admin_password
 
   depends_on = [module.nodes]
 }
+/*
+module "downstream_infra" {
+  source = "./modules/downstream_infra"
+  providers = {
+    rancher2.bootstrap = rancher2.bootstrap
+    }
+  rancher_hostname     = var.rancher_hostname
+  bootstrapPassword    = var.bootstrapPassword
+  admin_password       = var.admin_password
+  vsphere_server       = var.vsphere_server
+  vsphere_user         = var.vsphere_user
+  vsphere_password     = var.vsphere_password
+  vm_template_name     = var.vm_template_name
+  vm_cpu               = var.vm_cpu
+  vm_memory_size       = var.vm_memory_size
+  vm_system_disk_size  = var.vm_system_disk_size
+  vsphere_datacenter   = var.vsphere_datacenter
+  downstream_network   = var.downstream_network
+  downstream_datastore = var.downstream_datastore
+  downstream_folder    = var.downstream_folder
 
+  depends_on = [null_resource.wait_for_rancher]
+}
+*/
 /*
 resource "null_resource" "wait_for_rancher" {
   provisioner "local-exec" {
-    command = <<EOF
-      while true; do curl -kv https://"${var.rancher_hostname}" 2>&1 | grep -q "dynamiclistener-ca"; if [ $? != 0 ]; then echo "Rancher URL isn't ready yet"; sleep 5; continue; fi; break; done; echo "Rancher URL is Ready";
-              EOF
-  }
+    command = "while true; do curl -kv https://\"${var.rancher_hostname}/\" 2>&1 | grep -q \"dynamiclistener-ca\"; if [ $? != 0 ]; then echo \"Rancher URL is not ready\"; sleep 5; continue; fi; break; done; echo \"Rancher URL is Ready\";"
+        }
 
-  depends_on = [module.rancher]
+  depends_on = [module.rancher_server]
 }
 */

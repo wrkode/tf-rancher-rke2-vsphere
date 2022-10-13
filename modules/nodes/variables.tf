@@ -11,6 +11,7 @@ variable vsphere_user {
 variable vsphere_password {
   type        = string
   description = "Password for the vCenter instance"
+  sensitive = true
 }
 
 variable "vm_folder" {
@@ -96,6 +97,7 @@ variable vm_template {
 variable vm_ssh_key {
   type        = string
   description = "SSH key to add to the cloud-init for user access"
+  sensitive = true
 }
 
 variable vm_ssh_user {
@@ -156,6 +158,7 @@ variable rancher_hostname {
 variable rke2_token {
   type = string
   description = "RKE2 registration token"
+  sensitive = true
   
 }
 
@@ -173,6 +176,7 @@ variable host_username {
 variable host_password {
   type        = string
   description = "root user password"
+  sensitive = true
 }
 
  variable "ip_range" {

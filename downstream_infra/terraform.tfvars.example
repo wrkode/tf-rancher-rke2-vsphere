@@ -1,0 +1,35 @@
+vsphere_server     = "vcenter.lab.k8"
+vsphere_user       = "administrator@vsphere.local"
+vsphere_password   = "yourpassword"
+vsphere_datacenter = "DC"
+vsphere_cluster    = "clus01"
+vsphere_network    = "vm_network"
+
+vm_folder       = "VMS Folder" # must exist
+vm_prefix       = "systest-"
+vm_count        = "3"
+vm_datastore    = "esxi02datastore1"
+vm_cpucount     = "4"
+vm_memory       = "8192"
+vm_domainname   = "lab.k8"
+vm_network      = "172.16.56."
+vm_netmask      = "24"
+vm_gateway      = "172.16.56.2"
+vm_dns          = "172.16.56.4"
+vm_template     = "FBGoldenImage"
+vm_ssh_user     = "william"
+vm_ssh_key      = "ssh-rsa AAAAB3NzaC1yc2EAA......"
+vm_disk_size    = 50
+ip_range        = 221
+
+
+rancher_hostname    = "rancher.lab.k8"
+kubernetes_version  = "v1.24.4+rke2r1"
+host_username      = "root"
+host_password      = "root"
+
+###
+### Pre-created Access and Secret Key
+###
+rancher_access_key = "token-ver4c"
+rancher_secret_key = "42s2lkggdhl8vm2shdhdsxcx6m8pp5szf6flqqw7zl6r6tl4gv7595nq95"

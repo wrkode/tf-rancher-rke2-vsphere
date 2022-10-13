@@ -38,7 +38,5 @@ kubernetes_version  = "v1.23.10+rke2r1"             # RKE2 K8s version to be ins
 bootstrapPassword   = "Welcome@R4ncher1"            # Rancher Bootstrap Password
 admin_password      = "LinuxSup3rSt4r!"             # Rancher Admin Password
 rke2_token          = "supersecretjujitsu"          # RKE2 nodes registration token
-
 host_username      = "root"                         # VMs Root user 
-host_password      = "P@ssword!4325=23867"          
-# VMs Root password
+host_password      = "root"          # VMs Root password
