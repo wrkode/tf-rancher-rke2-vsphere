@@ -41,6 +41,8 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   memory   = var.vm_memory
   guest_id = data.vsphere_virtual_machine.template.guest_id
   firmware = "efi"
+  scsi_type = "lsilogic"
+  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
@@ -175,6 +177,8 @@ resource "vsphere_virtual_machine" "rke-lb" {
   memory   = var.lb_memory
   guest_id = data.vsphere_virtual_machine.template.guest_id
   firmware = "efi"
+  scsi_type = "lsilogic"
+  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
