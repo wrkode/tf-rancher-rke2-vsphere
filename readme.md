@@ -18,6 +18,8 @@ This repo creates the following:
 curl -sSL https://raw.githubusercontent.com/vmware/cloud-init-vmware-guestinfo/master/install.sh | sh -
 ```
 
+`sshpass` must be installed on the provisioning machine
+
 # Instructions
 
 * Copy `terraform.tfvars.example` as `terraform.tfvars`
@@ -33,3 +35,14 @@ Outputs:
 
 rancher_url = https://rancher.lab.k8
 ```
+
+# Caveats
+
+The `rancher_hostname` value must be a hostname that exists and is reachable by the provisioning machine. At time of writing, this had to point to an internal address provided by an internal DNS server. There was an existing DNS zone for cloudfare.dev, with no record for the `rancher_hostname` value, so the `terraform apply` failed at the helm stage
+
+When creating a new cluster, after a previous one has been destroyed, it is necessary to remove the key in `~/.ssh/known_hosts`, e.g.:
+
+```bash
+$ ssh-keygen -f "~/.ssh/known_hosts" -R "10.120.54.139"
+```
+...otherwise the subsequent  provisioning process will fail, as a completely new node has been provisioned

@@ -1,8 +1,8 @@
 
 resource "rancher2_cluster_v2" "systest" {
-  name                  = "systest"
-  kubernetes_version    = var.kubernetes_version
-  enable_network_policy = "true"
+  name                                     = "systest"
+  kubernetes_version                       = var.kubernetes_version
+  enable_network_policy                    = "true"
   default_cluster_role_for_project_members = "user"
 
   rke_config {

@@ -7,7 +7,7 @@ module "systest" {
   vsphere_datacenter = var.vsphere_datacenter
   vsphere_cluster    = var.vsphere_cluster
   vsphere_network    = var.vsphere_network
-  
+
   vm_folder     = var.vm_folder
   vm_prefix     = var.vm_prefix
   vm_count      = var.vm_count
@@ -22,11 +22,11 @@ module "systest" {
   vm_template   = var.vm_template
   vm_disk_size  = var.vm_disk_size
   ip_range      = var.ip_range
-  vm_ssh_key      = var.vm_ssh_key
-  vm_ssh_user     = var.vm_ssh_user
+  vm_ssh_key    = var.vm_ssh_key
+  vm_ssh_user   = var.vm_ssh_user
 
   rancher_hostname   = var.rancher_hostname
-  kubernetes_version = var.kubernetes_version 
+  kubernetes_version = var.kubernetes_version
   host_username      = var.host_username
   host_password      = var.host_password
   rancher_access_key = var.rancher_access_key
@@ -41,7 +41,7 @@ module "loadtest" {
   vsphere_datacenter = var.vsphere_datacenter
   vsphere_cluster    = var.vsphere_cluster
   vsphere_network    = var.vsphere_network
-  
+
   vm_folder     = var.vm_folder
   vm_prefix     = "loadtest-"
   vm_count      = var.vm_count
@@ -56,11 +56,11 @@ module "loadtest" {
   vm_template   = var.vm_template
   vm_disk_size  = var.vm_disk_size
   ip_range      = 89
-  vm_ssh_key      = var.vm_ssh_key
-  vm_ssh_user     = var.vm_ssh_user
+  vm_ssh_key    = var.vm_ssh_key
+  vm_ssh_user   = var.vm_ssh_user
 
   rancher_hostname   = var.rancher_hostname
-  kubernetes_version = var.kubernetes_version 
+  kubernetes_version = var.kubernetes_version
   host_username      = var.host_username
   host_password      = var.host_password
   rancher_access_key = var.rancher_access_key
