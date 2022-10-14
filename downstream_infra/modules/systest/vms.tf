@@ -83,10 +83,7 @@ resource "vsphere_virtual_machine" "rke-nodes" {
 ### ALL node_command are set to insecure_node_command switch to node_command when using valid Rancher Certificates
 ###
 resource "null_resource" "node_command_node1" {
-  /*depends_on = [
-    vsphere_virtual_machine.rke-lb
-  ]
-  */
+
   provisioner "remote-exec" {
 
     connection {
@@ -102,10 +99,7 @@ resource "null_resource" "node_command_node1" {
 }
 
 resource "null_resource" "node_command_node2" {
-  depends_on = [
-    null_resource.wait_for_rke2_ready
-  ]
- 
+
   provisioner "remote-exec" {
 
     connection {
@@ -121,9 +115,6 @@ resource "null_resource" "node_command_node2" {
 }
 
 resource "null_resource" "node_command_node3" {
-    depends_on = [
-    null_resource.wait_for_rke2_ready
-  ]
 
   provisioner "remote-exec" {
 
@@ -138,47 +129,5 @@ resource "null_resource" "node_command_node3" {
         ]
   }
 }
-
-###
-### RKE2 primary node wait_for_rke2_ready routine hardcoded on first node name
-###
-resource "null_resource" "wait_for_rke2_ready" {
-    depends_on = [
-      null_resource.node_command_node1
-    ]
-  provisioner "remote-exec" {
-    connection {
-      type     = "ssh"
-      host     = vsphere_virtual_machine.rke-nodes.*.default_ip_address[0]
-      user     = var.host_username
-      password = var.host_password
-    }
-    inline = [
-      "while true; do STATUS=$(/var/lib/rancher/rke2/bin/kubectl --kubeconfig=/etc/rancher/rke2/rke2.yaml get nodes |grep systest-1 | awk '{print $2}'); if [ $STATUS != \"Ready\" ]; then echo \"RKE2 Is Not Ready\"; sleep 5; continue; fi; break; done; echo \"RKE2 is Ready\""
-    ]
-  }
-}
-/*  
-  resource "null_resource" "rke2_second" {
-  depends_on = [
-    null_resource.wait_for_rke2_ready
-  ]
-  
-  provisioner "remote-exec" {
-
-    connection {
-      type     = "ssh"
-      host     = vsphere_virtual_machine.rke-nodes.*.default_ip_address[1]
-      user     = var.host_username
-      password = var.host_password
-    }
-    inline = [
-      "systemctl enable rke2-server",
-      "systemctl start rke2-server"
-    ]
-    
-  }
-}
-*/
 
 

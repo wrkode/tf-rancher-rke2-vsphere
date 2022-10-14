@@ -103,6 +103,9 @@ resource "null_resource" "rke2_primary" {
   }
 }
 
+###
+### RKE2 primary node wait_for_rke2_ready routine hardcoded on first node name
+###
 resource "null_resource" "wait_for_rke2_ready" {
     depends_on = [
       null_resource.rke2_primary
