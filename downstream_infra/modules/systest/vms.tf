@@ -96,7 +96,7 @@ resource "null_resource" "node_command_node1" {
     }
     inline = [
       "${rancher2_cluster_v2.systest.cluster_registration_token[0].insecure_node_command} --etcd --controlplane --worker"
-        ]
+      ]
   }
 }
 
@@ -112,7 +112,7 @@ resource "null_resource" "node_command_node2" {
     }
     inline = [
       "${rancher2_cluster_v2.systest.cluster_registration_token[0].insecure_node_command} --worker"
-        ]
+      ]
   }
 }
 
@@ -128,7 +128,7 @@ resource "null_resource" "node_command_node3" {
     }
     inline = [
       "${rancher2_cluster_v2.systest.cluster_registration_token[0].insecure_node_command} --worker"
-        ]
+      ]
   }
 }
 

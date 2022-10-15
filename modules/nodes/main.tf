@@ -162,7 +162,7 @@ resource "null_resource" "rke2_third" {
     }
     inline = [
       "systemctl enable rke2-server",
-      "systemctl start rke2-server",
+      "systemctl start rke2-server"
     ]
     
   }
