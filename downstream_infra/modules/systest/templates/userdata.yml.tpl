@@ -23,6 +23,7 @@ write_files:
       kernel.panic_on_oops=1
 runcmd:
    - sudo useradd -r -c "etcd user" -s /sbin/nologin -M etcd -U
+   - sudo sed -i 's/gdp root/gdp root ${vm_ssh_user}/' /etc/ssh/sshd_config
    - sudo mkdir -p /etc/rancher/rke2
    - sudo mv /root/config.yaml /etc/rancher/rke2/config.yaml
    - sudo systemctl stop firewalld
