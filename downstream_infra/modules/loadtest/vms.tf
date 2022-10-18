@@ -37,19 +37,20 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
 
-  num_cpus         = var.vm_cpucount
-  memory           = var.vm_memory
-  guest_id         = data.vsphere_virtual_machine.template.guest_id
-  firmware         = "efi"
+  num_cpus = var.vm_cpucount
+  memory   = var.vm_memory
+  guest_id = data.vsphere_virtual_machine.template.guest_id
+  firmware = "efi"
   enable_disk_uuid = true
+  scsi_type = "lsilogic"
 
   network_interface {
     network_id = data.vsphere_network.network.id
   }
 
   disk {
-    label            = "disk0"
-    size             = var.vm_disk_size
+    label = "disk0"
+    size  = var.vm_disk_size
     thin_provisioned = false
   }
 
@@ -72,8 +73,8 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       node_ip       = "${var.vm_network}${count.index + var.ip_range}",
       node_hostname = "${var.vm_prefix}${count.index + 1}.${var.vm_domainname}",
       k8s_version   = "${var.kubernetes_version}",
-      vm_ssh_user   = var.vm_ssh_user,
-      vm_ssh_key    = var.vm_ssh_key
+      vm_ssh_user = var.vm_ssh_user,
+      vm_ssh_key = var.vm_ssh_key
     }))
     "guestinfo.userdata.encoding" = "base64"
   }
@@ -94,12 +95,12 @@ resource "null_resource" "node_command_node1" {
     }
     inline = [
       "${rancher2_cluster_v2.loadtest.cluster_registration_token[0].insecure_node_command} --etcd --controlplane --worker"
-    ]
+        ]
   }
 }
 
 resource "null_resource" "node_command_node2" {
-
+ 
   provisioner "remote-exec" {
 
     connection {
@@ -110,7 +111,7 @@ resource "null_resource" "node_command_node2" {
     }
     inline = [
       "${rancher2_cluster_v2.loadtest.cluster_registration_token[0].insecure_node_command} --worker"
-    ]
+        ]
   }
 }
 
@@ -126,6 +127,9 @@ resource "null_resource" "node_command_node3" {
     }
     inline = [
       "${rancher2_cluster_v2.loadtest.cluster_registration_token[0].insecure_node_command} --worker"
-    ]
+        ]
   }
 }
+
+
+
