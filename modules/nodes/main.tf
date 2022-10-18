@@ -1,10 +1,3 @@
-provider "vsphere" {
-  user                 = var.vsphere_user
-  password             = var.vsphere_password
-  vsphere_server       = var.vsphere_server
-  allow_unverified_ssl = true
-}
-
 data "vsphere_datacenter" "dc" {
   name = var.vsphere_datacenter
 }
@@ -41,16 +34,14 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   memory   = var.vm_memory
   guest_id = data.vsphere_virtual_machine.template.guest_id
   firmware = "efi"
-  scsi_type = "lsilogic"
-  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
   }
 
   disk {
-    label = "disk0"
-    size  = var.vm_disk_size
+    label            = "disk0"
+    size             = var.vm_disk_size
     thin_provisioned = false
   }
 
@@ -75,8 +66,8 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       rancherui     = "${var.rancher_hostname}",
       rke2_token    = "${var.rke2_token}",
       k8s_version   = "${var.kubernetes_version}",
-      vm_ssh_user = var.vm_ssh_user,
-      vm_ssh_key = var.vm_ssh_key
+      vm_ssh_user   = var.vm_ssh_user,
+      vm_ssh_key    = var.vm_ssh_key
     }))
     "guestinfo.userdata.encoding" = "base64"
   }
@@ -86,7 +77,7 @@ resource "null_resource" "rke2_primary" {
   depends_on = [
     vsphere_virtual_machine.rke-lb
   ]
-  
+
   provisioner "remote-exec" {
 
     connection {
@@ -99,9 +90,9 @@ resource "null_resource" "rke2_primary" {
       "sed -i 1d /etc/rancher/rke2/config.yaml",
       "systemctl enable rke2-server",
       "systemctl start rke2-server",
-      "sleep 20" # Giving time to bootstrap K8s
+      "sleep 40" # Giving time to bootstrap K8s
     ]
-    
+
   }
 }
 
@@ -109,9 +100,9 @@ resource "null_resource" "rke2_primary" {
 ### RKE2 primary node wait_for_rke2_ready routine hardcoded on first node name
 ###
 resource "null_resource" "wait_for_rke2_ready" {
-    depends_on = [
-      null_resource.rke2_primary
-    ]
+  depends_on = [
+    null_resource.rke2_primary
+  ]
   provisioner "remote-exec" {
     connection {
       type     = "ssh"
@@ -124,12 +115,12 @@ resource "null_resource" "wait_for_rke2_ready" {
     ]
   }
 }
-  
-  resource "null_resource" "rke2_second" {
+
+resource "null_resource" "rke2_second" {
   depends_on = [
     null_resource.wait_for_rke2_ready
   ]
-  
+
   provisioner "remote-exec" {
 
     connection {
@@ -142,7 +133,7 @@ resource "null_resource" "wait_for_rke2_ready" {
       "systemctl enable rke2-server",
       "systemctl start rke2-server"
     ]
-    
+
   }
 }
 
@@ -151,7 +142,7 @@ resource "null_resource" "rke2_third" {
   depends_on = [
     null_resource.rke2_second
   ]
-  
+
   provisioner "remote-exec" {
 
     connection {
@@ -162,9 +153,9 @@ resource "null_resource" "rke2_third" {
     }
     inline = [
       "systemctl enable rke2-server",
-      "systemctl start rke2-server"
+      "systemctl start rke2-server",
     ]
-    
+
   }
 }
 resource "vsphere_virtual_machine" "rke-lb" {
@@ -177,16 +168,14 @@ resource "vsphere_virtual_machine" "rke-lb" {
   memory   = var.lb_memory
   guest_id = data.vsphere_virtual_machine.template.guest_id
   firmware = "efi"
-  scsi_type = "lsilogic"
-  enable_disk_uuid = true
 
   network_interface {
     network_id = data.vsphere_network.network.id
   }
 
   disk {
-    label = "disk0"
-    size  = var.vm_disk_size
+    label            = "disk0"
+    size             = var.vm_disk_size
     thin_provisioned = false
   }
 
@@ -206,12 +195,12 @@ resource "vsphere_virtual_machine" "rke-lb" {
 
 
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/templates/userdata_lb.yml.tpl", {
-        servers = {
-          for node in vsphere_virtual_machine.rke-nodes : node.default_ip_address => node.name
-          }
-      node_ip       = "${var.lb_address}",
+      servers = {
+        for node in vsphere_virtual_machine.rke-nodes : node.default_ip_address => node.name
+      }
+      node_ip     = "${var.lb_address}",
       vm_ssh_user = var.vm_ssh_user,
-      vm_ssh_key = var.vm_ssh_key
+      vm_ssh_key  = var.vm_ssh_key
     }))
     "guestinfo.userdata.encoding" = "base64"
 
