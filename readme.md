@@ -23,7 +23,7 @@ curl -sSL https://raw.githubusercontent.com/vmware/cloud-init-vmware-guestinfo/m
 * Copy `terraform.tfvars.example` as `terraform.tfvars`
 * Populate as you see fit
 * Initialize the providers with  `terraform init`
-* Apply with `terraform apply --var-file variables.tfvars`
+* Apply with `terraform apply`
 * Once comple, Terraform will output the URL for Rancher, IE:
 
 ```

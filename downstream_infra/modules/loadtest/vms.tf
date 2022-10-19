@@ -36,13 +36,12 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
-
-  num_cpus = var.vm_cpucount
-  memory   = var.vm_memory
-  guest_id = data.vsphere_virtual_machine.template.guest_id
-  firmware = "efi"
+  num_cpus         = var.vm_cpucount
+  memory           = var.vm_memory
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  firmware         = "efi"
   enable_disk_uuid = true
-  scsi_type = "lsilogic"
+  scsi_type        = "lsilogic"
 
   network_interface {
     network_id = data.vsphere_network.network.id
@@ -66,7 +65,6 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       node_dns      = var.vm_dns,
       node_hostname = "${var.vm_prefix}${count.index + 1}"
     }))
-
     "guestinfo.metadata.encoding" = "base64"
 
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/templates/userdata.yml.tpl", {
@@ -86,7 +84,6 @@ resource "vsphere_virtual_machine" "rke-nodes" {
 resource "null_resource" "node_command_node1" {
 
   provisioner "remote-exec" {
-
     connection {
       type     = "ssh"
       host     = vsphere_virtual_machine.rke-nodes.*.default_ip_address[0]
@@ -102,7 +99,6 @@ resource "null_resource" "node_command_node1" {
 resource "null_resource" "node_command_node2" {
  
   provisioner "remote-exec" {
-
     connection {
       type     = "ssh"
       host     = vsphere_virtual_machine.rke-nodes.*.default_ip_address[1]
@@ -118,7 +114,6 @@ resource "null_resource" "node_command_node2" {
 resource "null_resource" "node_command_node3" {
 
   provisioner "remote-exec" {
-
     connection {
       type     = "ssh"
       host     = vsphere_virtual_machine.rke-nodes.*.default_ip_address[2]
@@ -130,6 +125,3 @@ resource "null_resource" "node_command_node3" {
         ]
   }
 }
-
-
-

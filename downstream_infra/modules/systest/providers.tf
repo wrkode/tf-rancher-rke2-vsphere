@@ -6,12 +6,3 @@ terraform {
     }
   }
 }
-/*
-provider "rancher2" {
-  api_url    = "https://${var.rancher_hostname}"
-  access_key = var.rancher_access_key
-  secret_key = var.rancher_secret_key
-  insecure = true
-}
-
-*/

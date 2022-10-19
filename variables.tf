@@ -191,7 +191,7 @@ variable "host_username" {
 variable "host_password" {
   type        = string
   description = "root user password"
-  sensitive = true
+  sensitive   = true
 }
 
  variable "ip_range" {

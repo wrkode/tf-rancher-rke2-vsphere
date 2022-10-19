@@ -36,12 +36,11 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
-
-  num_cpus = var.vm_cpucount
-  memory   = var.vm_memory
-  guest_id = data.vsphere_virtual_machine.template.guest_id
-  firmware = "efi"
-  scsi_type = "lsilogic"
+  num_cpus         = var.vm_cpucount
+  memory           = var.vm_memory
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  firmware         = "efi"
+  scsi_type        = "lsilogic"
   enable_disk_uuid = true
 
   network_interface {
@@ -66,7 +65,6 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       node_dns      = var.vm_dns,
       node_hostname = "${var.vm_prefix}${count.index + 1}"
     }))
-
     "guestinfo.metadata.encoding" = "base64"
 
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/templates/userdata.yml.tpl", {
@@ -101,7 +99,6 @@ resource "null_resource" "rke2_primary" {
       "systemctl start rke2-server",
       "sleep 20" # Giving time to bootstrap K8s
     ]
-    
   }
 }
 
@@ -141,8 +138,7 @@ resource "null_resource" "wait_for_rke2_ready" {
     inline = [
       "systemctl enable rke2-server",
       "systemctl start rke2-server"
-    ]
-    
+    ] 
   }
 }
 
@@ -164,7 +160,6 @@ resource "null_resource" "rke2_third" {
       "systemctl enable rke2-server",
       "systemctl start rke2-server"
     ]
-    
   }
 }
 resource "vsphere_virtual_machine" "rke-lb" {
@@ -172,12 +167,11 @@ resource "vsphere_virtual_machine" "rke-lb" {
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
-
-  num_cpus = var.lb_cpucount
-  memory   = var.lb_memory
-  guest_id = data.vsphere_virtual_machine.template.guest_id
-  firmware = "efi"
-  scsi_type = "lsilogic"
+  num_cpus         = var.lb_cpucount
+  memory           = var.lb_memory
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  firmware         = "efi"
+  scsi_type        = "lsilogic"
   enable_disk_uuid = true
 
   network_interface {
@@ -201,9 +195,7 @@ resource "vsphere_virtual_machine" "rke-lb" {
       node_dns      = var.vm_dns,
       node_hostname = var.lb_prefix
     }))
-
     "guestinfo.metadata.encoding" = "base64"
-
 
     "guestinfo.userdata" = base64encode(templatefile("${path.module}/templates/userdata_lb.yml.tpl", {
         servers = {
@@ -214,6 +206,5 @@ resource "vsphere_virtual_machine" "rke-lb" {
       vm_ssh_key = var.vm_ssh_key
     }))
     "guestinfo.userdata.encoding" = "base64"
-
   }
 }

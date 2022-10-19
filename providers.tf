@@ -13,7 +13,7 @@ provider "rancher2" {
 }
 
 provider "rancher2" {
-  alias = "bootstrap"
+  alias     = "bootstrap"
   api_url   = "https://${var.rancher_hostname}"
   bootstrap = true
   insecure  = true
@@ -21,7 +21,7 @@ provider "rancher2" {
 
 # Provider config for admin
 provider "rancher2" {
-  alias = "admin"
+  alias     = "admin"
   api_url   = rancher2_bootstrap.admin.url
   token_key = module.rancher_server.admin_token
   insecure  = true
