@@ -2,7 +2,6 @@
 locals {
     kube_config = yamldecode(module.nodes.kubeconfig)
 }
-
 provider "helm" {
     kubernetes {
         host = local.kube_config.clusters[0].cluster.server

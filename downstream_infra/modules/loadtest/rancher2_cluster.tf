@@ -5,6 +5,12 @@ resource "rancher2_cluster_v2" "loadtest" {
   enable_network_policy = "true"
   default_cluster_role_for_project_members = "user"
 
+  local_auth_endpoint {
+    ca_certs = ""
+    enabled  = var.ace_enabled
+    fqdn     = var.ace_fqdn
+  }
+
   rke_config {
     machine_selector_config {
       config = {

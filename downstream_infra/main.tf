@@ -31,6 +31,8 @@ module "systest" {
   host_password      = var.host_password
   rancher_access_key = var.rancher_access_key
   rancher_secret_key = var.rancher_secret_key
+  ace_enabled        = false
+  ace_fqdn           = ""
 }
 
 module "loadtest" {
@@ -65,4 +67,6 @@ module "loadtest" {
   host_password      = var.host_password
   rancher_access_key = var.rancher_access_key
   rancher_secret_key = var.rancher_secret_key
+  ace_enabled        = var.ace_enabled
+  ace_fqdn           = "loadtestlb.lab.k8" 
 }

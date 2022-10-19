@@ -180,7 +180,6 @@ variable host_password {
 }
 
  variable "ip_range" {
-   type = number
+   type        = number
    description = "starting octet"
-   
  }
