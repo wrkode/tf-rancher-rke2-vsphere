@@ -1,3 +1,8 @@
+variable "cluster_name" {
+  type = string
+  description = "Name of the Rancher cluster"
+}
+
 variable "vsphere_server" {
   type        = string
   description = "FQDN or IP address of vCenter instance"
@@ -94,84 +99,11 @@ variable "vm_template" {
   description = "Name of VM template to use"
 }
 
-variable "lb_address" {
-  type        = string
-  description = "IP address for the NGINX loadbalancer"
-}
-
-variable "lb_prefix" {
-  type        = string
-  description = "Name prefix for the Loadbalancer"
-}
-
-variable "lb_datastore" {
-  type        = string
-  description = "Datastore object to store the Loadbalancer VM"
-}
-
-variable "lb_cpucount" {
-  type        = number
-  description = "Number of CPU's to assign to the Loadbalancer VM"
-}
-
-variable "lb_memory" {
-  type        = number
-  description = "Amount of RAM in MB to assign to the Loadbalancer VM"
-}
-
-variable "lb_domainname" {
-  type        = string
-  description = "Domain name suffix for the VM"
-}
-
-variable "lb_netmask" {
-  type        = string
-  description = "Subnet mask for the Loadbalancer VM"
-}
-
-variable "lb_gateway" {
-  type        = string
-  description = "Gateway for the Loadbalancer VM"
-}
-
-variable "lb_dns" {
-  type        = string
-  description = "DNS Server for the Loadbalancer VM"
-}
-
-variable "cert_manager" {
-  type = object({
-    ns      = string
-    version = string
-    chart_set = list(object({
-      name  = string
-      value = string
-    }))
-  })
-  default = {
-    ns      = "cert-manager"
-    version = "v1.7.1"
-    chart_set = [
-      {
-        name  = "installCRDs"
-        value = "true"
-      }
-    ]
-  }
-  description = "Cert-manager helm chart properties. Chart sets can be added using chart_set param"
-}
-
 variable "rancher_hostname" {
   type        = string
   description = "Name for the Rancher host"
 }
 
-variable "rke2_token" {
-  type        = string
-  description = "RKE2 registration token"
-  sensitive   = true
-
-}
 variable "vm_ssh_key" {
   type        = string
   description = "SSH key to add to the cloud-init for user access"
@@ -199,12 +131,7 @@ variable "ip_range" {
 
 }
 
-# Rancher version to be deployed
-variable "rancher_version" {
-  type        = string
-  description = "Version of Rancher Server to install"
-  default     = "v2.6.6"
-}
+
 
 variable "kubernetes_version" {
   type        = string
@@ -212,11 +139,16 @@ variable "kubernetes_version" {
 
 }
 
-variable "rancher_chart_options" {
-  type = list(object({
-    name  = string
-    value = string
-  }))
-  description = "List of options for the Rancher Helm Chart"
-  default     = []
+
+variable "rancher_access_key" {
+  type        = string
+  description = "pre-created Rancher access key"
+  sensitive   = true
+}
+
+variable "rancher_secret_key" {
+  type        = string
+  description = "pre-created Rancher secret key"
+  sensitive   = true
+
 }
