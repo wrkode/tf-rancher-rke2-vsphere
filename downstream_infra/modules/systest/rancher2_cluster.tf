@@ -4,7 +4,7 @@ resource "rancher2_cluster_v2" "systest" {
   kubernetes_version    = var.kubernetes_version
   enable_network_policy = "true"
   default_cluster_role_for_project_members = "user"
-  
+
   local_auth_endpoint {
     ca_certs = ""
     enabled  = var.ace_enabled
