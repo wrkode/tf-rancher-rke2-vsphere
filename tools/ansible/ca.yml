@@ -1,0 +1,58 @@
+- hosts: localhost
+  vars:
+    root_ca_key: ./rootCA.key
+    root_ca_cert: ./CAcert.pem
+    ca_privkey_passphrase_file: ./keypassphrase
+  tasks:
+    - ansible.builtin.stat:
+        path: "{{ ca_privkey_passphrase_file }}"
+      register: passphrase_created
+
+    - ansible.builtin.set_fact:
+        root_ca_passphrase: "{{ lookup('password', '/dev/null', seed=inventory_hostname) }}"
+      when: passphrase_created.stat.exists == false
+    
+    - ansible.builtin.copy:
+        dest: "{{ ca_privkey_passphrase_file }}"
+        content: |
+          {{ root_ca_passphrase }}
+        mode: 0400
+      when: passphrase_created.stat.exists == false
+
+    - debug:
+        var: root_ca_passphrase
+
+    - name: Create the CA privkey
+      community.crypto.openssl_privatekey:
+        path: "{{ root_ca_key }}"
+        backup: true
+        size: 4096
+        cipher: auto
+        passphrase: "{{ root_ca_passphrase }}"
+      when: passphrase_created.stat.exists == false
+
+    - name: Create CSR for CA cert
+      community.crypto.openssl_csr_pipe:
+        privatekey_path: "{{ root_ca_key }}"
+        privatekey_passphrase: "{{ root_ca_passphrase }}"
+        common_name: Upstream Cluster CA
+        use_common_name_for_san: false
+        basic_constraints:
+          - 'CA:TRUE'
+        basic_constraints_critical: yes
+        key_usage:
+          - keyCertSign
+        key_usage_critical: true
+      register: ca_csr
+      when: passphrase_created.stat.exists == false
+
+    - name: Create self-signed CA cert from CSR
+      community.crypto.x509_certificate:
+        path: "{{ root_ca_cert }}"
+        csr_content: "{{ ca_csr.csr }}"
+        privatekey_path: "{{ root_ca_key }}"
+        privatekey_passphrase: "{{ root_ca_passphrase }}"
+        provider: selfsigned
+      when: passphrase_created.stat.exists == false
+        
+        

@@ -47,22 +47,22 @@ resource "kubernetes_secret" "tls-rancher-ingress" {
   }
 }
 
-resource "helm_release" "cert_manager" {
-  repository       = "https://charts.jetstack.io"
-  name             = "jetstack"
-  chart            = "cert-manager"
-  version          = var.cert_manager.version
-  namespace        = var.cert_manager.ns
-  create_namespace = true
+# resource "helm_release" "cert_manager" {
+#   repository       = "https://charts.jetstack.io"
+#   name             = "jetstack"
+#   chart            = "cert-manager"
+#   version          = var.cert_manager.version
+#   namespace        = var.cert_manager.ns
+#   create_namespace = true
 
-  dynamic "set" {
-    for_each = var.cert_manager.chart_set
-    content {
-      name  = set.value.name
-      value = set.value.value
-    }
-  }
-}
+#   dynamic "set" {
+#     for_each = var.cert_manager.chart_set
+#     content {
+#       name  = set.value.name
+#       value = set.value.value
+#     }
+#   }
+# }
 
 # Install Rancher helm chart
 resource "helm_release" "rancher_server" {
@@ -107,7 +107,7 @@ resource "helm_release" "rancher_server" {
   }
 
   depends_on = [
-    helm_release.cert_manager,
+    # helm_release.cert_manager,
     kubernetes_secret.tls-ca,
     kubernetes_secret.tls-rancher-ingress
   ]

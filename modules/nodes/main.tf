@@ -30,10 +30,12 @@ resource "vsphere_virtual_machine" "rke-nodes" {
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
 
-  num_cpus = var.vm_cpucount
-  memory   = var.vm_memory
-  guest_id = data.vsphere_virtual_machine.template.guest_id
-  firmware = "efi"
+  num_cpus         = var.vm_cpucount
+  memory           = var.vm_memory
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  firmware         = "efi"
+  enable_disk_uuid = true
+  scsi_type        = "lsilogic"
 
   network_interface {
     network_id = data.vsphere_network.network.id
@@ -164,10 +166,12 @@ resource "vsphere_virtual_machine" "rke-lb" {
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
 
-  num_cpus = var.lb_cpucount
-  memory   = var.lb_memory
-  guest_id = data.vsphere_virtual_machine.template.guest_id
-  firmware = "efi"
+  num_cpus         = var.lb_cpucount
+  memory           = var.lb_memory
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  firmware         = "efi"
+  enable_disk_uuid = true
+  scsi_type        = "lsilogic"
 
   network_interface {
     network_id = data.vsphere_network.network.id

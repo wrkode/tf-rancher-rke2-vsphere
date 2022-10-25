@@ -1,7 +1,7 @@
 
 module "downstream" {
   source             = "./modules/downstream"
-  cluster_name = "systest"
+  cluster_name       = "systest"
   vsphere_server     = var.vsphere_server
   vsphere_user       = var.vsphere_user
   vsphere_password   = var.vsphere_password

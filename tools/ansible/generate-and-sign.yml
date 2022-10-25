@@ -1,0 +1,49 @@
+- hosts: localhost
+  vars:
+    private_key_path: ./myprivkey
+    csr_path: ./mycsr
+    common_name: "*.cloudfare-dev.ptawa.wa.gov.au"
+    cert_path: ./mycert
+    ownca_path: "CAcert.pem"
+    ownca_privatekey_path: rootCA.key
+    ownca_privatekey_passphrase: "{{ lookup('file', 'keypassphrase') }}"
+    key_size: 2048
+    # PTA specific
+    csr_organization_name: "Public Transport Authority"
+    csr_organizational_unit_name: "IT Systems"
+    csr_country_name: "AU"
+    csr_state_or_province_name: "Western Australia"
+    csr_locality_name: "Perth"
+    csr_email_address: "sysadmin@pta.wa.gov.au"
+
+  tasks:
+    - name: Create a private key
+      community.crypto.openssl_privatekey:
+        path: "{{ private_key_path }}"
+        size: "{{ key_size }}"
+      tags:
+        - generate
+
+    - name: Create a CSR
+      community.crypto.openssl_csr:
+        path: "{{ csr_path }}"
+        privatekey_path: "{{ private_key_path }}"
+        common_name: "{{ common_name }}"
+        organization_name: "{{ csr_organization_name }}"
+        organizational_unit_name: "{{ csr_organizational_unit_name }}"
+        country_name: "{{ csr_country_name }}"
+        state_or_province_name: "{{ csr_state_or_province_name }}"
+        locality_name: "{{ csr_locality_name }}"
+        email_address: "{{ csr_email_address }}"
+      tags:
+        - csr-only
+        - generate
+
+    - name: Sign the CSR with the local CA cert
+      community.crypto.x509_certificate:
+        path: "{{ cert_path }}"
+        csr_path: "{{ csr_path }}"
+        ownca_path: "{{ ownca_path }}"
+        ownca_privatekey_path: "{{ ownca_privatekey_path }}"
+        ownca_privatekey_passphrase: "{{ ownca_privatekey_passphrase }}"
+        provider: ownca
