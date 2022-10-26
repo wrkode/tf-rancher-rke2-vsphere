@@ -76,9 +76,9 @@ resource "vsphere_virtual_machine" "rke-nodes" {
 }
 
 resource "null_resource" "rke2_primary" {
-  depends_on = [
-    vsphere_virtual_machine.rke-lb
-  ]
+  #   depends_on = [
+  #     vsphere_virtual_machine.rke-lb
+  #   ]
 
   provisioner "remote-exec" {
 
@@ -88,13 +88,13 @@ resource "null_resource" "rke2_primary" {
       user     = var.host_username
       password = var.host_password
     }
-    inline = [
-      "sed -i 1d /etc/rancher/rke2/config.yaml",
-      "systemctl enable rke2-server",
-      "systemctl start rke2-server",
-      "sleep 40" # Giving time to bootstrap K8s
-    ]
-
+    script = "${path.module}/scripts/start-rke2.sh"
+    # inline = [
+    #   "sed -i 1d /etc/rancher/rke2/config.yaml",
+    #   "systemctl enable rke2-server",
+    #   "systemctl start rke2-server",
+    #   "sleep 40" # Giving time to bootstrap K8s
+    # ]
   }
 }
 
@@ -112,9 +112,10 @@ resource "null_resource" "wait_for_rke2_ready" {
       user     = var.host_username
       password = var.host_password
     }
-    inline = [
-      "while true; do STATUS=$(/var/lib/rancher/rke2/bin/kubectl --kubeconfig=/etc/rancher/rke2/rke2.yaml get nodes |grep rancher-1 | awk '{print $2}'); if [ $STATUS != \"Ready\" ]; then echo \"RKE2 Is Not Ready\"; sleep 5; continue; fi; break; done; echo \"RKE2 is Ready\""
-    ]
+    script = "${path.module}/scripts/rke-ready.sh"
+    # inline = [
+    #   "while true; do STATUS=$(/var/lib/rancher/rke2/bin/kubectl --kubeconfig=/etc/rancher/rke2/rke2.yaml get nodes |grep rancher-1 | awk '{print $2}'); if [ $STATUS != \"Ready\" ]; then echo \"RKE2 Is Not Ready\"; sleep 5; continue; fi; break; done; echo \"RKE2 is Ready\""
+    # ]
   }
 }
 
@@ -161,6 +162,7 @@ resource "null_resource" "rke2_third" {
   }
 }
 resource "vsphere_virtual_machine" "rke-lb" {
+  count            = var.lb_enabled ? 1 : 0
   name             = var.lb_prefix
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id

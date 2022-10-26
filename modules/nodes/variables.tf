@@ -1,3 +1,9 @@
+variable "lb_enabled" {
+  type        = bool
+  description = "Whether to provision an LB node or not"
+  default     = false
+
+}
 variable "vsphere_server" {
   type        = string
   description = "FQDN or IP address of vCenter instance"
