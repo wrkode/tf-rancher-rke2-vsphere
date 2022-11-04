@@ -1,51 +1,51 @@
-resource "kubernetes_namespace" "cattle-system" {
-  metadata {
-    name = "cattle-system"
-  }
+# resource "kubernetes_namespace" "cattle-system" {
+#   metadata {
+#     name = "cattle-system"
+#   }
 
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations,
-      metadata[0].labels
-    ]
-  }
-}
-resource "kubernetes_secret" "tls-ca" {
-  metadata {
-    name      = "tls-ca"
-    namespace = kubernetes_namespace.cattle-system.metadata[0].name
-  }
+#   lifecycle {
+#     ignore_changes = [
+#       metadata[0].annotations,
+#       metadata[0].labels
+#     ]
+#   }
+# }
+# resource "kubernetes_secret" "tls-ca" {
+#   metadata {
+#     name      = "tls-ca"
+#     namespace = kubernetes_namespace.cattle-system.metadata[0].name
+#   }
 
-  type = "Opaque"
+#   type = "Opaque"
 
-  data = {
-    "cacerts.pem" = "${file("${path.root}/certs/cacerts.pem")}"
-  }
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations
-    ]
-  }
-}
+#   data = {
+#     "cacerts.pem" = "${file("${path.root}/certs/cacerts.pem")}"
+#   }
+#   lifecycle {
+#     ignore_changes = [
+#       metadata[0].annotations
+#     ]
+#   }
+# }
 
-resource "kubernetes_secret" "tls-rancher-ingress" {
-  metadata {
-    name      = "tls-rancher-ingress"
-    namespace = kubernetes_namespace.cattle-system.metadata[0].name
-  }
+# resource "kubernetes_secret" "tls-rancher-ingress" {
+#   metadata {
+#     name      = "tls-rancher-ingress"
+#     namespace = kubernetes_namespace.cattle-system.metadata[0].name
+#   }
 
-  type = "kubernetes.io/tls"
+#   type = "kubernetes.io/tls"
 
-  data = {
-    "tls.crt" = "${file("${path.root}/certs/tls.crt")}"
-    "tls.key" = "${file("${path.root}/certs/tls.key")}"
-  }
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations
-    ]
-  }
-}
+#   data = {
+#     "tls.crt" = "${file("${path.root}/certs/tls.crt")}"
+#     "tls.key" = "${file("${path.root}/certs/tls.key")}"
+#   }
+#   lifecycle {
+#     ignore_changes = [
+#       metadata[0].annotations
+#     ]
+#   }
+# }
 
 # resource "helm_release" "cert_manager" {
 #   repository       = "https://charts.jetstack.io"
@@ -111,11 +111,11 @@ resource "helm_release" "rancher_server" {
     }
   }
 
-  depends_on = [
-    # helm_release.cert_manager,
-    kubernetes_secret.tls-ca,
-    kubernetes_secret.tls-rancher-ingress
-  ]
+  # depends_on = [
+  #   # helm_release.cert_manager,
+  #   kubernetes_secret.tls-ca,
+  #   kubernetes_secret.tls-rancher-ingress
+  # ]
 }
 
 resource "rancher2_bootstrap" "admin" {
