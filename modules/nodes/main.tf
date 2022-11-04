@@ -112,10 +112,10 @@ resource "null_resource" "wait_for_rke2_ready" {
       user     = var.host_username
       password = var.host_password
     }
-    script = "${path.module}/scripts/rke-ready.sh"
-    # inline = [
-    #   "while true; do STATUS=$(/var/lib/rancher/rke2/bin/kubectl --kubeconfig=/etc/rancher/rke2/rke2.yaml get nodes |grep rancher-1 | awk '{print $2}'); if [ $STATUS != \"Ready\" ]; then echo \"RKE2 Is Not Ready\"; sleep 5; continue; fi; break; done; echo \"RKE2 is Ready\""
-    # ]
+    #script = "${path.module}/scripts/rke-ready.sh"
+    inline = [
+       "while true; do STATUS=$(/var/lib/rancher/rke2/bin/kubectl --kubeconfig=/etc/rancher/rke2/rke2.yaml get nodes |grep -i RANCHERUP1 | awk '{print $2}'); if [ $STATUS != \"Ready\" ]; then echo \"RKE2 Is Not Ready\"; sleep 5; continue; fi; break; done; echo \"RKE2 is Ready\""
+    ]
   }
 }
 

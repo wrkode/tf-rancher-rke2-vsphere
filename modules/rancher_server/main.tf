@@ -83,14 +83,19 @@ resource "helm_release" "rancher_server" {
     value = var.bootstrapPassword
   }
 
-  set {
-    name  = "ingress.tls.source"
-    value = "secret"
-  }
-
+#  set {
+#    name  = "ingress.tls.source"
+#    value = "secret"
+#  }
+#
   set {
     name  = "privateCA"
     value = "true"
+  }
+
+  set {
+    name = "tls"
+    value = "external"
   }
 
   set {

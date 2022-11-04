@@ -27,8 +27,6 @@ runcmd:
    - sudo mv /root/config.yaml /etc/rancher/rke2/config.yaml
    - sudo systemctl stop firewalld
    - sudo systemctl disable firewalld
-   - sudo zypper -n up
    - sudo curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=${k8s_version} sh -
    - sudo cp -f /opt/rke2/share/rke2/rke2-cis-sysctl.conf /etc/sysctl.d/60-rke2-cis.conf
    - sudo systemctl restart systemd-sysctl
-   - sudo zypper -n install apparmor-parser

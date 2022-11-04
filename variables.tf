@@ -1,3 +1,11 @@
+variable "admin_password" {
+  
+}
+
+variable "bootstrapPassword" {
+  
+}
+
 variable "vsphere_server" {
   type        = string
   description = "FQDN or IP address of vCenter instance"

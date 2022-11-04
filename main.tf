@@ -76,8 +76,10 @@ module "rancher_server" {
   }
   rancher_hostname  = var.rancher_hostname
   rancher_version   = var.rancher_version
-  bootstrapPassword = random_string.bootstrap-password.result
-  admin_password    = random_string.admin-password.result
+  # bootstrapPassword = random_string.bootstrap-password.result
+  # admin_password    = random_string.admin-password.result
+  bootstrapPassword = var.bootstrapPassword
+  admin_password    = var.admin_password
 
   depends_on = [module.nodes]
 }
