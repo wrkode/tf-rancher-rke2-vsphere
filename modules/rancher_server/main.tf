@@ -88,10 +88,10 @@ resource "helm_release" "rancher_server" {
 #    value = "secret"
 #  }
 #
-  set {
-    name  = "privateCA"
-    value = "true"
-  }
+  # set {
+  #   name  = "privateCA"
+  #   value = "true"
+  # }
 
   set {
     name = "tls"
