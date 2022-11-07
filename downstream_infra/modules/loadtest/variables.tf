@@ -156,3 +156,20 @@ variable "ace_enabled" {
   default     = true
   description = "enable/disable Autorized Cluster Endpoint"
 }
+
+#### BGP required Vars ####
+
+variable "asnumber" {
+  type        = number
+  description = "BGP Autonomous System Number"
+}
+
+variable "bgp_peer1_ip" {
+  type        = string
+  description = "First BGP Peer IP Address" 
+}
+
+variable "bgp_peer2_ip" {
+  type        = string
+  description = "Second BGP Peer IP Address" 
+}

@@ -64,5 +64,8 @@ module "loadtest" {
   rancher_access_key = var.rancher_access_key
   rancher_secret_key = var.rancher_secret_key
   ace_enabled        = var.ace_enabled
-  ace_fqdn           = "loadtestlb.lab.k8" 
+  ace_fqdn           = "loadtestlb.lab.k8"
+  asnumber           = var.asnumber
+  bgp_peer1_ip       = var.bgp_peer1_ip
+  bgp_peer2_ip       = var.bgp_peer2_ip
 }

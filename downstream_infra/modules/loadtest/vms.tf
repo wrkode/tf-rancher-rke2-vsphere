@@ -71,6 +71,9 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       node_ip       = "${var.vm_network}${count.index + var.ip_range}",
       node_hostname = "${var.vm_prefix}${count.index + 1}.${var.vm_domainname}",
       k8s_version   = "${var.kubernetes_version}",
+      asnumber      = "${var.asnumber}",
+      bgp_peer1_ip  = "${var.bgp_peer1_ip}",
+      bgp_peer2_ip  = "${var.bgp_peer2_ip}",
       vm_ssh_user = var.vm_ssh_user,
       vm_ssh_key = var.vm_ssh_key
     }))
