@@ -19,5 +19,17 @@ resource "rancher2_cluster_v2" "loadtest" {
         protect-kernel-defaults = true
       }
     }
+    chart_values = <<EOF
+rke2-calico:
+  installation:
+    calicoNetwork:
+      bgp: Enabled
+      ipPools:
+        encapsulation: None
+  apiServer:
+    enabled: true
+  felixConfiguration:
+    wireguardEnabled: true
+EOF
   }
 }

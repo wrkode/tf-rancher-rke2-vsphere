@@ -36,3 +36,7 @@ rancher_secret_key = "42s2lkggdhl8vm2shdhdsxcx6m8pp5szf6flqqw7zl6r6tl4gv7595nq95
 
 ace_enabled         = true
 ace_fqdn            = ""
+
+asnumber            = "64512"
+bgp_peer1_ip        = "172.16.56.253"
+bgp_peer2_ip        = "172.16.56.254"

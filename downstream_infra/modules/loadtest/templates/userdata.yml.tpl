@@ -21,7 +21,7 @@ write_files:
       vm.overcommit_memory=1
       kernel.panic=10
       kernel.panic_on_oops=1
-  - path: /root/BGPConfig.yaml
+  - path: /root/bgpconfig.yaml
     content: |
       apiVersion: projectcalico.org/v3
       kind: BGPConfiguration
@@ -55,7 +55,7 @@ runcmd:
    - sudo mkdir -p /etc/rancher/rke2
    - sudo mkdir -p /var/lib/rancher/rke2/server/manifests
    - sudo mv /root/config.yaml /etc/rancher/rke2/config.yaml
-   - sudo mv /root/BGPConfig.yaml /var/lib/rancher/rke2/server/manifests/BGPConfig.yaml
+   - sudo mv /root/bgpconfig.yaml /var/lib/rancher/rke2/server/manifests/rke2-bgpconfig.yaml
    - sudo mv /root/bgp-glb-peer1.yaml /var/lib/rancher/rke2/server/manifests/bgp-glb-peer1.yaml
    - sudo mv /root/bgp-glb-peer2.yaml /var/lib/rancher/rke2/server/manifests/bgp-glb-peer2.yaml
    - sudo systemctl stop firewalld
