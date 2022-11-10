@@ -74,6 +74,7 @@ resource "vsphere_virtual_machine" "rke-nodes" {
       asnumber      = "${var.asnumber}",
       bgp_peer1_ip  = "${var.bgp_peer1_ip}",
       bgp_peer2_ip  = "${var.bgp_peer2_ip}",
+      service_cidr  = "${var.service_cidr}",
       vm_ssh_user = var.vm_ssh_user,
       vm_ssh_key = var.vm_ssh_key
     }))

@@ -15,8 +15,6 @@ resource "rancher2_cluster_v2" "loadtest" {
     machine_selector_config {
       config = {
         cloud-provider-name     = ""
-        profile                 = "cis-1.6"
-        protect-kernel-defaults = true
       }
     }
     chart_values = <<EOF
@@ -25,11 +23,18 @@ rke2-calico:
     calicoNetwork:
       bgp: Enabled
       ipPools:
+      - natOutgoing: Enabled
         encapsulation: None
+        cidr: ${var.cluster_cidr}
+        blockSize: ${var.block_size}
+        nodeSelector: all()
   apiServer:
     enabled: true
-  felixConfiguration:
-    wireguardEnabled: true
 EOF
+    machine_global_config = <<EOF
+    cni: "calico"
+    cluster-cidr: "${var.cluster_cidr}"
+    service-cidr: "${var.service_cidr}"
+    EOF
   }
 }

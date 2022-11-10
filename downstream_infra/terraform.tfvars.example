@@ -40,3 +40,7 @@ ace_fqdn            = ""
 asnumber            = "64512"
 bgp_peer1_ip        = "172.16.56.253"
 bgp_peer2_ip        = "172.16.56.254"
+
+cluster_cidr        = "172.21.0.0/16"
+service_cidr        = "172.20.0.0/16"
+block_size          = 26

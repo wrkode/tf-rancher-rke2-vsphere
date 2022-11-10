@@ -68,4 +68,7 @@ module "loadtest" {
   asnumber           = var.asnumber
   bgp_peer1_ip       = var.bgp_peer1_ip
   bgp_peer2_ip       = var.bgp_peer2_ip
+  cluster_cidr       = var.cluster_cidr
+  service_cidr       = var.service_cidr
+  block_size         = var.block_size
 }

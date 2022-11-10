@@ -9,7 +9,6 @@ write_files:
     content: |
         write-kubeconfig-mode: 0644
         secrets-encryption: true
-        profile: cis-1.6           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
         cni: calico
   - path: /etc/sysctl.d/90-rke2.conf
     content: |
@@ -28,6 +27,8 @@ write_files:
       metadata:
         name: default
       spec:
+        serviceClusterIPs:
+        - cidr: ${service_cidr}
         logSeverityScreen: Info
         nodeToNodeMeshEnabled: true
         asNumber: ${asnumber}

@@ -173,3 +173,18 @@ variable "bgp_peer2_ip" {
   type        = string
   description = "Second BGP Peer IP Address" 
 }
+
+variable "cluster_cidr" {
+  type        = string
+  description = "CIDR that the pods will be provisioned with"
+}
+
+variable "service_cidr" {
+  type        = string
+  description = "CIDR for the Cluster services"
+}
+
+variable "block_size" {
+  type        = number
+  description = "Block size for Calico nodes"
+}
