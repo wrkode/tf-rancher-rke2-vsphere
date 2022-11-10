@@ -10,6 +10,8 @@ write_files:
         write-kubeconfig-mode: 0644
         secrets-encryption: true
         cni: calico
+        secrets-encryption: true
+        profile: cis-1.6           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
   - path: /etc/sysctl.d/90-rke2.conf
     content: |
       net.ipv4.conf.all.forwarding=1

@@ -15,6 +15,8 @@ resource "rancher2_cluster_v2" "loadtest" {
     machine_selector_config {
       config = {
         cloud-provider-name     = ""
+        profile                 = "cis-1.6"
+        protect-kernel-defaults = true
       }
     }
     chart_values = <<EOF
